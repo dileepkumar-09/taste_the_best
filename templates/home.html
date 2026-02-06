@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home - HomeMade Pickles</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <span>Welcome, {{ session['username'] }}</span>
+        <div>
+            <a href="/home">Home</a>
+            <a href="/cart">Cart</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+    <div style="text-align: center; padding: 50px;">
+        <h2>What would you like to explore today?</h2>
+        <div class="product-grid">
+            <a href="/veg_pickles" class="btn-green" style="text-decoration:none;">Veg Pickles</a>
+            <a href="/non_veg_pickles" class="btn-green" style="text-decoration:none;">Non-Veg Pickles</a>
+            <a href="/snacks" class="btn-green" style="text-decoration:none;">Snacks</a>
+        </div>
+    </div>
+</body>
+</html>
