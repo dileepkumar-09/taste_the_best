@@ -7,7 +7,7 @@ import json, uuid
 app = Flask(__name__)
 app.secret_key = 'homemade_secret_key'
 
-dynamodb = boto3.resource('dynamodb', region_name='ap-southeast-2')
+dynamodb = boto3.resource('dynamodb', region_name='ap-south-1')
 users_table = dynamodb.Table('Users')
 orders_table = dynamodb.Table('Orders')
 
@@ -105,9 +105,9 @@ def checkout():
         return redirect(url_for('success'))
     return render_template('checkout.html')
 
-@app.route('/sucess')
+@app.route('/success')
 def success():
-    return render_template('sucess.html')
+    return render_template('success.html')
 
 @app.route('/about')
 def about():
@@ -123,4 +123,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
+
     app.run(host='0.0.0.0', port=5000, debug=True)
