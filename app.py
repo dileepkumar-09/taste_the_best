@@ -37,3 +37,91 @@ products = {
         {'id': 18, 'name': 'Dry Fruit Laddu', 'weights': {'250': 500, '500': 1000, '1000': 1500}}
     ]
 }
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        username = request.form['username'].strip()
+        email = request.form['email'].strip()
+        password = request.form['password']
+        hashed_password = generate_password_hash(password)
+        users_table.put_item(Item={'username': username, 'email': email, 'password': hashed_password})
+        return redirect(url_for('login'))
+    return render_template('signup.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        response = users_table.get_item(Key={'username': username})
+        if 'Item' in response:
+            user = response['Item']
+            if check_password_hash(user['password'], password):
+                session['logged_in'] = True
+                session['username'] = username
+                return redirect(url_for('home'))
+    return render_template('login.html')
+
+@app.route('/home')
+def home():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    return render_template('home.html')
+
+@app.route('/veg_pickles')
+def veg_pickles():
+    return render_template('veg_pickles.html', products=products['veg_pickles'])
+
+@app.route('/non_veg_pickles')
+def non_veg_pickles():
+    return render_template('non_veg_pickles.html', products=products['non_veg_pickles'])
+
+@app.route('/snacks')
+def snacks():
+    return render_template('snacks.html', products=products['snacks'])
+
+@app.route('/cart')
+def cart():
+    return render_template('cart.html')
+
+@app.route('/checkout', methods=['GET', 'POST'])
+def checkout():
+    if request.method == 'POST':
+        orders_table.put_item(Item={
+            'order_id': str(uuid.uuid4()),
+            'username': session.get('username', 'Guest'),
+            'name': request.form.get('name'),
+            'address': request.form.get('address'),
+            'phone': request.form.get('phone'),
+            'items': json.loads(request.form.get('cart_data', '[]')),
+            'total_amount': float(request.form.get('total_amount', 0)),
+            'timestamp': datetime.now().isoformat()
+        })
+        return redirect(url_for('success'))
+    return render_template('checkout.html')
+
+@app.route('/success')
+def success():
+    return render_template('success.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact us')
+def contact_us():
+    return render_template('contact us.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+if __name__ == '__main__':
+
+    app.run(host='0.0.0.0', port=5000, debug=True)
