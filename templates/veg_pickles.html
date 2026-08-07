@@ -1,29 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
-</head>
-<body>
-    <nav>
-        <a href="/home">Home</a>
-        <a href="/cart">Cart</a>
-        <a href="/logout">Logout</a>
-    </nav>
-    <div class="product-grid">
-        {% for product in products %}
-        <div class="product-card">
-            <img src="{{ url_for('static', filename='images/' + product.name.replace(' ', '_').lower() + '.jpg') }}" alt="{{ product.name }}">
-            
-            <h3>{{ product.name }}</h3>
-            <select id="weight-{{ product.id }}">
-                {% for weight, price in product.weights.items() %}
-                <option value="{{ price }}">{{ weight }}g - ₹{{ price }}</option>
-                {% endfor %}
-            </select>
-            <button class="btn-green" onclick="addToCart('{{ product.name }}', '{{ product.id }}')">Add to Cart</button>
-        </div>
-        {% endfor %}
+{% extends "base.html" %}
+
+{% block title %}Veg Pickles - HomeMade Pickles{% endblock %}
+
+{% block head %}
+<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<h2 style="text-align:center;">Vegetarian Pickles</h2>
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        {% if product.id in [7, 23] %}
+        <span class="badge-tag">Bestseller</span>
+        {% elif product.id in [9, 25] %}
+        <span class="badge-tag">Trending</span>
+        {% else %}
+        <span class="badge-tag">Handcrafted</span>
+        {% endif %}
+        <img src="{{ url_for('static', filename='images/' + product.name.replace(' ', '_').lower() + '.jpg') }}" alt="{{ product.name }}">
+        
+        <h3>{{ product.name }}</h3>
+        <select id="weight-{{ product.id }}">
+            {% for weight, price in product.weights.items() %}
+            <option value="{{ price }}">{{ weight }}g - ₹{{ price }}</option>
+            {% endfor %}
+        </select>
+        <button class="btn-green" onclick="addToCart('{{ product.name }}', '{{ product.id }}')">Add to Cart</button>
     </div>
-</body>
-</html>
+    {% endfor %}
+</div>
+{% endblock %}

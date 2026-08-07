@@ -7,6 +7,9 @@
 <body>
     <div class="auth-container">
         <h2>Create Account</h2>
+        {% if error %}
+            <p class="error-msg" style="color: #ff3333; font-weight: bold; margin-bottom: 15px; font-size: 0.9em;">{{ error }}</p>
+        {% endif %}
         <form action="/signup" method="post">
             <input type="text" name="username" placeholder="Username" required>
             <input type="email" name="email" placeholder="Email" required>

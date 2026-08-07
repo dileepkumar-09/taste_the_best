@@ -1,0 +1,1216 @@
+/* ── Zaby Chat Widget — Ruixen Dark Glass Theme ── */
+
+/* ── Google Font Import ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ── Floating Action Button ── */
+.zaby-fab {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #4f46e5 100%);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    box-shadow:
+        0 4px 24px rgba(124, 58, 237, 0.45),
+        0 0 0 1px rgba(124, 58, 237, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    font-size: 0;
+}
+
+.zaby-fab:hover {
+    transform: scale(1.08) translateY(-2px);
+    box-shadow:
+        0 8px 32px rgba(124, 58, 237, 0.55),
+        0 0 0 1px rgba(124, 58, 237, 0.5);
+}
+
+.zaby-fab svg {
+    width: 26px;
+    height: 26px;
+    fill: #fff;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.zaby-fab.open svg {
+    transform: scale(0.95);
+}
+
+/* FAB Bump */
+.zaby-fab.bump {
+    animation: fab-bump 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes fab-bump {
+    0% { transform: scale(1); }
+    35% { transform: scale(1.15) translateY(-2px); }
+    55% { transform: scale(0.92) translateY(1px); }
+    80% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+/* ── Chat Panel ── */
+.zaby-chat-panel {
+    position: fixed;
+    bottom: 100px;
+    right: 28px;
+    width: 420px;
+    max-height: 660px;
+    background: rgba(8, 8, 24, 0.88);
+    backdrop-filter: blur(28px) saturate(1.4);
+    -webkit-backdrop-filter: blur(28px) saturate(1.4);
+    border-radius: 20px;
+    border: 1px solid rgba(124, 58, 237, 0.18);
+    box-shadow:
+        0 32px 80px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(124, 58, 237, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    display: flex;
+    flex-direction: column;
+    z-index: 9998;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* Closed state */
+    opacity: 0;
+    transform: translateY(24px) scale(0.95);
+    pointer-events: none;
+    transition:
+        opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.zaby-chat-panel.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Subtle neon glow line at the bottom */
+.zaby-chat-panel::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.5), rgba(6, 182, 212, 0.4), rgba(124, 58, 237, 0.5), transparent);
+    border-radius: 2px;
+    z-index: 1;
+}
+
+/* ── Header — Minimal ── */
+.zaby-chat-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(12, 10, 32, 0.5);
+}
+
+.zaby-header-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.zaby-chat-header-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    position: relative;
+}
+
+/* ── Aurora Orb — Multi-layered Premium Avatar ── */
+.aurora-orb {
+    width: 36px;
+    height: 36px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Core sphere — luminous gradient with slow rotation */
+.aurora-core {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%,
+        #c084fc 0%,
+        #7c3aed 30%,
+        #4f46e5 55%,
+        #1e1b4b 100%
+    );
+    box-shadow:
+        0 0 10px rgba(124, 58, 237, 0.7),
+        0 0 20px rgba(124, 58, 237, 0.4),
+        0 0 40px rgba(124, 58, 237, 0.15),
+        inset 0 -3px 6px rgba(6, 182, 212, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    animation: aurora-pulse 3s ease-in-out infinite alternate;
+    z-index: 3;
+}
+
+/* Refraction layer — creates light depth inside the sphere */
+.aurora-refract {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0%,
+        rgba(6, 182, 212, 0.3) 15%,
+        transparent 30%,
+        rgba(236, 72, 153, 0.25) 50%,
+        transparent 65%,
+        rgba(16, 185, 129, 0.2) 80%,
+        transparent 100%
+    );
+    animation: aurora-spin 6s linear infinite;
+    mix-blend-mode: screen;
+    z-index: 4;
+}
+
+/* Orbiting ring — thin gradient border spinning around the core */
+.aurora-ring {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid transparent;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0%,
+        rgba(124, 58, 237, 0.6) 25%,
+        rgba(6, 182, 212, 0.5) 50%,
+        rgba(236, 72, 153, 0.4) 75%,
+        transparent 100%
+    ) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: aurora-ring-spin 4s linear infinite;
+    z-index: 2;
+}
+
+/* Orbiting particles */
+.aurora-particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    z-index: 5;
+}
+
+.aurora-particle.p1 {
+    background: #c084fc;
+    box-shadow: 0 0 4px #c084fc, 0 0 8px rgba(192, 132, 252, 0.5);
+    animation: orbit-1 3s linear infinite;
+}
+
+.aurora-particle.p2 {
+    background: #06b6d4;
+    box-shadow: 0 0 4px #06b6d4, 0 0 8px rgba(6, 182, 212, 0.5);
+    animation: orbit-2 4s linear infinite;
+    width: 2px;
+    height: 2px;
+}
+
+.aurora-particle.p3 {
+    background: #ec4899;
+    box-shadow: 0 0 4px #ec4899, 0 0 8px rgba(236, 72, 153, 0.4);
+    animation: orbit-3 5s linear infinite;
+    width: 2.5px;
+    height: 2.5px;
+}
+
+/* ── Aurora Keyframes ── */
+@keyframes aurora-pulse {
+    0% {
+        box-shadow:
+            0 0 10px rgba(124, 58, 237, 0.7),
+            0 0 20px rgba(124, 58, 237, 0.4),
+            0 0 40px rgba(124, 58, 237, 0.15),
+            inset 0 -3px 6px rgba(6, 182, 212, 0.3),
+            inset 0 2px 4px rgba(255, 255, 255, 0.2);
+        transform: scale(1);
+    }
+    100% {
+        box-shadow:
+            0 0 14px rgba(124, 58, 237, 0.9),
+            0 0 28px rgba(6, 182, 212, 0.5),
+            0 0 48px rgba(236, 72, 153, 0.2),
+            inset 0 -3px 6px rgba(6, 182, 212, 0.5),
+            inset 0 2px 4px rgba(255, 255, 255, 0.35);
+        transform: scale(1.04);
+    }
+}
+
+@keyframes aurora-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+@keyframes aurora-ring-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(-360deg); }
+}
+
+@keyframes orbit-1 {
+    0%   { transform: rotate(0deg) translateX(16px) rotate(0deg); opacity: 1; }
+    50%  { opacity: 0.4; }
+    100% { transform: rotate(360deg) translateX(16px) rotate(-360deg); opacity: 1; }
+}
+
+@keyframes orbit-2 {
+    0%   { transform: rotate(120deg) translateX(14px) rotate(-120deg); opacity: 0.8; }
+    50%  { opacity: 0.3; }
+    100% { transform: rotate(480deg) translateX(14px) rotate(-480deg); opacity: 0.8; }
+}
+
+@keyframes orbit-3 {
+    0%   { transform: rotate(240deg) translateX(15px) rotate(-240deg); opacity: 0.9; }
+    50%  { opacity: 0.35; }
+    100% { transform: rotate(600deg) translateX(15px) rotate(-600deg); opacity: 0.9; }
+}
+
+.zaby-chat-header-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.zaby-chat-header-info h4 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #f1f5f9;
+    letter-spacing: 0.3px;
+}
+
+.zaby-chat-header-info p {
+    margin: 2px 0 0;
+    font-size: 11px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.zaby-status-dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 6px #10b981;
+    animation: status-pulse 2s infinite;
+}
+
+@keyframes status-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+/* Header actions — close button only */
+.zaby-header-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.zaby-header-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.03);
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    padding: 0;
+}
+
+.zaby-header-icon:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #a78bfa;
+}
+
+/* Response badge — hidden by default in new design */
+.zaby-response-badge {
+    display: none;
+}
+
+/* ── Messages Area ── */
+.zaby-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 16px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: transparent;
+    min-height: 260px;
+    max-height: 360px;
+}
+
+/* Scrollbar */
+.zaby-chat-messages::-webkit-scrollbar { width: 3px; }
+.zaby-chat-messages::-webkit-scrollbar-track { background: transparent; }
+.zaby-chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(124, 58, 237, 0.15);
+    border-radius: 4px;
+}
+.zaby-chat-messages::-webkit-scrollbar-thumb:hover {
+    background: rgba(124, 58, 237, 0.3);
+}
+
+/* ── Welcome Section ── */
+.zaby-welcome {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 14px 16px;
+    border-radius: 14px;
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.zaby-welcome-text {
+    flex: 1;
+}
+
+.zaby-welcome-star {
+    color: #7c3aed;
+    font-size: 14px;
+    margin-left: 8px;
+    flex-shrink: 0;
+    opacity: 0.5;
+}
+
+/* ── Quick Action Pills ── */
+.zaby-quick-actions {
+    display: flex;
+    gap: 8px;
+    padding: 4px 0;
+    flex-wrap: wrap;
+}
+
+.zaby-quick-card {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.25s, transform 0.15s;
+    white-space: nowrap;
+}
+
+.zaby-quick-card:hover {
+    background: rgba(124, 58, 237, 0.1);
+    border-color: rgba(124, 58, 237, 0.3);
+    transform: translateY(-1px);
+}
+
+.zaby-quick-emoji {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.zaby-quick-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #cbd5e1;
+    line-height: 1;
+    letter-spacing: 0.1px;
+}
+
+/* Hide the arrow in the new pill design */
+.zaby-quick-arrow {
+    display: none;
+}
+
+/* ── Message Bubbles ── */
+.zaby-msg {
+    max-width: 82%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    word-wrap: break-word;
+    animation: zabyMsgIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes zabyMsgIn {
+    from { opacity: 0; transform: translateY(10px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.zaby-msg.user {
+    align-self: flex-end;
+    background: rgba(124, 58, 237, 0.2);
+    color: #f1f5f9;
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-bottom-right-radius: 4px;
+}
+
+.zaby-msg.agent {
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.04);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom-left-radius: 4px;
+}
+
+/* Agent row with mini avatar + timestamp */
+.zaby-agent-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: flex-start;
+    max-width: 90%;
+    animation: zabyMsgIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.zaby-agent-mini-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #c084fc, #7c3aed, #4f46e5);
+    flex-shrink: 0;
+    margin-top: 2px;
+    box-shadow: 0 0 8px rgba(124, 58, 237, 0.5), 0 0 16px rgba(124, 58, 237, 0.2);
+}
+
+.zaby-agent-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+.zaby-agent-content .zaby-msg.agent {
+    max-width: 100%;
+}
+
+.zaby-msg-timestamp {
+    font-size: 10px;
+    color: #475569;
+    padding-left: 2px;
+}
+
+/* ── Typing Indicator — Three Dots ── */
+.zaby-typing {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 16px;
+    align-self: flex-start;
+    margin-left: 30px;
+}
+
+.wave-particle {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #64748b;
+    animation: dot-pulse 1.4s ease-in-out infinite;
+}
+
+.wave-particle.wave-1 {
+    animation-delay: 0s;
+    background: #7c3aed;
+}
+
+.wave-particle.wave-2 {
+    animation-delay: 0.2s;
+    background: #06b6d4;
+}
+
+/* Third dot added via HTML */
+.wave-particle.wave-3 {
+    animation-delay: 0.4s;
+    background: #8b5cf6;
+}
+
+@keyframes dot-pulse {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1.1); opacity: 1; }
+}
+
+/* ── Input Area — Textarea + Send ── */
+.zaby-chat-input-wrapper {
+    flex-shrink: 0;
+    padding: 12px 14px 14px;
+    background: rgba(8, 8, 24, 0.6);
+}
+
+.zaby-input-box {
+    background: transparent;
+    border: none;
+    border-radius: 14px;
+    transition: box-shadow 0.3s;
+}
+
+.zaby-input-box:focus-within {
+    box-shadow: 0 0 16px rgba(124, 58, 237, 0.1);
+}
+
+.zaby-chat-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.zaby-chat-input textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: #f1f5f9;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    padding: 12px 14px 4px;
+    resize: none;
+    outline: none;
+    min-height: 40px;
+    max-height: 120px;
+    line-height: 1.5;
+    box-sizing: border-box;
+}
+
+.zaby-chat-input textarea::placeholder {
+    color: #475569;
+}
+
+/* Input footer — just the send button */
+.zaby-input-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 4px 10px 8px;
+}
+
+.zaby-send-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(124, 58, 237, 0.15);
+    color: #64748b;
+    cursor: not-allowed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.zaby-send-btn.active {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.3);
+}
+
+.zaby-send-btn.active:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 18px rgba(124, 58, 237, 0.45);
+}
+
+.zaby-send-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Suggestions — hidden in new design */
+.zaby-suggestions {
+    display: none;
+}
+
+/* Error message */
+.zaby-error {
+    text-align: center;
+    color: #f87171;
+    font-size: 12.5px;
+    padding: 8px 12px;
+    background: rgba(220, 38, 38, 0.08);
+    border: 1px solid rgba(220, 38, 38, 0.15);
+    border-radius: 10px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 460px) {
+    .zaby-chat-panel {
+        right: 8px;
+        left: 8px;
+        width: auto;
+        bottom: 80px;
+        max-height: 75vh;
+        border-radius: 16px;
+    }
+
+    .zaby-fab {
+        right: 16px;
+        bottom: 16px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .zaby-quick-actions {
+        flex-wrap: wrap;
+    }
+}
+
+/* ════════════════════════════════════════════════════════
+   Rich Component Widgets — Dark Glass Cards
+   ════════════════════════════════════════════════════════ */
+
+.zaby-msg.agent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.zaby-text-content {
+    line-height: 1.5;
+}
+
+/* Common Widget Base */
+.zaby-widget-product,
+.zaby-widget-cart,
+.zaby-widget-checkout,
+.zaby-widget-success,
+.zaby-widget-customization,
+.zaby-widget-compare {
+    background: rgba(15, 12, 36, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(124, 58, 237, 0.18);
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    color: #e2e8f0;
+}
+
+.btn-widget {
+    padding: 9px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.12s, box-shadow 0.2s;
+    text-align: center;
+    width: 100%;
+}
+
+.btn-widget:hover {
+    transform: scale(1.02);
+}
+
+.btn-widget:active {
+    transform: scale(0.98);
+}
+
+/* Product Widget */
+.widget-product-img {
+    width: 100%;
+    max-height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.widget-product-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 2px;
+}
+
+.widget-product-select {
+    width: 100% !important;
+    padding: 8px 12px !important;
+    font-size: 12.5px !important;
+    font-family: 'Inter', sans-serif !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    outline: none !important;
+    background-color: #120e2e !important;
+    background-image: none !important;
+    color: #f1f5f9 !important;
+    cursor: pointer !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+}
+
+.widget-product-select:focus {
+    border-color: rgba(124, 58, 237, 0.5) !important;
+    background-color: #120e2e !important;
+    box-shadow: 0 0 8px rgba(124, 58, 237, 0.3) !important;
+}
+
+.widget-product-select option {
+    background-color: #120e2e !important;
+    color: #f1f5f9 !important;
+}
+
+.widget-product-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.btn-add-cart {
+    background: rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-add-cart:hover {
+    background: rgba(124, 58, 237, 0.12);
+    border-color: rgba(124, 58, 237, 0.3);
+}
+
+.btn-add-cart.added {
+    background: #10b981;
+    color: #fff;
+    border-color: #10b981;
+}
+
+.btn-buy-now {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+}
+
+.btn-buy-now:hover {
+    box-shadow: 0 6px 16px rgba(124, 58, 237, 0.35);
+}
+
+/* Cart Widget */
+.widget-cart-title,
+.widget-checkout-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #a78bfa;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+}
+
+.widget-cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.widget-cart-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+}
+
+.widget-cart-summary {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    border-top: 1px dashed rgba(255, 255, 255, 0.08);
+    padding-top: 8px;
+    margin-top: 4px;
+    font-size: 13.5px;
+}
+
+.btn-checkout-link {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    color: #fff;
+    margin-top: 6px;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+}
+
+/* Checkout Widget */
+.widget-checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.widget-checkout-form label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.widget-checkout-form input,
+.widget-checkout-form textarea {
+    padding: 8px 12px;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    outline: none;
+    background: rgba(15, 10, 30, 0.8);
+    color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.widget-checkout-form input:focus,
+.widget-checkout-form textarea:focus {
+    border-color: rgba(124, 58, 237, 0.4);
+    box-shadow: 0 0 8px rgba(124, 58, 237, 0.2);
+}
+
+.widget-checkout-form textarea {
+    resize: none;
+}
+
+.widget-checkout-summary {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    padding: 8px 0;
+    border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.widget-checkout-error {
+    font-size: 12px;
+    color: #f87171;
+    background: rgba(220, 38, 38, 0.08);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(220, 38, 38, 0.15);
+}
+
+.btn-place-order {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+}
+
+/* Success Widget */
+.zaby-widget-success {
+    background: rgba(16, 185, 129, 0.08);
+    border-color: rgba(16, 185, 129, 0.25);
+    text-align: center;
+    align-items: center;
+    padding: 18px;
+}
+
+.success-icon {
+    font-size: 24px;
+    color: #fff;
+    background: #10b981;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    margin-bottom: 8px;
+}
+
+.success-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #34d399;
+}
+
+.success-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12.5px;
+    margin: 10px 0;
+    text-align: left;
+    width: 100%;
+    background: rgba(15, 10, 30, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.success-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #e2e8f0;
+}
+
+.success-meta {
+    font-size: 11px;
+    color: #a7f3d0;
+    margin: 0;
+}
+
+/* Comparison Widget */
+.zaby-widget-compare {
+    background: rgba(15, 12, 36, 0.7);
+    border: 1px solid rgba(124, 58, 237, 0.18);
+    padding: 14px;
+    margin-top: 8px;
+    border-radius: 14px;
+}
+
+.widget-compare-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #a78bfa;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 6px;
+}
+
+.widget-compare-grid {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.widget-compare-col {
+    flex: 1;
+    min-width: 110px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 5px;
+}
+
+.compare-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.compare-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.25;
+    height: 30px;
+    overflow: hidden;
+}
+
+.compare-spec {
+    font-size: 10.5px;
+    color: #94a3b8;
+}
+
+.compare-price {
+    font-size: 12px;
+    font-weight: 700;
+    color: #10b981;
+}
+
+.btn-compare-add {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    color: #fff;
+    font-size: 10px;
+    padding: 6px 10px;
+    margin-top: 4px;
+    width: 100%;
+}
+
+.btn-compare-add:disabled {
+    background: rgba(100, 116, 139, 0.2);
+    color: #475569;
+    cursor: not-allowed;
+}
+
+/* Customization Widget */
+.zaby-widget-customization {
+    background: rgba(15, 12, 36, 0.7);
+    border: 1px solid rgba(124, 58, 237, 0.18);
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 8px;
+}
+
+.customizer-header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 10px;
+}
+
+.customizer-img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.customizer-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.customizer-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.customizer-price {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.customizer-price strong {
+    color: #10b981;
+}
+
+.customizer-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.customizer-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #a78bfa;
+}
+
+.customizer-slider {
+    width: 100%;
+    margin: 4px 0;
+    cursor: pointer;
+    accent-color: #7c3aed;
+}
+
+.customizer-slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #64748b;
+}
+
+.customizer-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.customizer-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #cbd5e1;
+    cursor: pointer;
+}
+
+.customizer-checkbox-label input {
+    cursor: pointer;
+    accent-color: #7c3aed;
+}
+
+.btn-customizer-add {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    color: #fff;
+    margin-top: 6px;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+}
+
+.btn-customizer-add:disabled {
+    background: rgba(100, 116, 139, 0.2);
+    color: #475569;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Action Toast */
+.zaby-action-toast {
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 3px solid #7c3aed;
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 6px;
+    font-style: italic;
+}
+
+/* Profile Autofill */
+.profile-autofill-badge {
+    background: rgba(16, 185, 129, 0.1);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    margin: 4px 0 8px 0;
+    font-weight: 600;
+    text-align: center;
+}
+
+.checkout-discount-text {
+    font-size: 12px;
+    color: #f59e0b;
+    font-weight: 600;
+}
+
+.nutrition-spec {
+    font-size: 10.5px;
+    background: rgba(15, 10, 30, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin: 2px 0;
+    width: 90%;
+    text-align: left;
+    color: #cbd5e1;
+    box-sizing: border-box;
+}

@@ -1,12 +1,86 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>HomeMade Pickles & Snacks</title>
+    <title>Taste the Best - Authentic Pickles & Snacks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='zaby-chat.css') }}">
 </head>
-<body style="text-align: center; padding-top: 100px;">
-    <h1>Authentic Homemade Flavors</h1>
-    <p>Preserving Traditions, One Jar at a Time.</p>
-    <a href="{{ url_for('signup') }}" class="btn-green" style="text-decoration: none;">Get Started</a>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <a href="/" class="brand-logo">🏺 Taste the Best</a>
+            <nav class="nav-links">
+                <a href="/login" class="nav-login-btn">Login</a>
+                <a href="/signup" class="nav-signup-btn">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Split Screen -->
+        <section class="hero-split">
+            <div class="hero-content">
+                <span class="hero-tag">✨ Premium Artisanal Kitchen</span>
+                <h1 class="hero-title">Authentic <span>Homemade Pickles</span> & Snacks</h1>
+                <p class="hero-desc">
+                    Hand-crafted jar-by-jar using premium cold-pressed oils, freshly ground masalas, and heirloom family recipes. Preserving traditions, one jar at a time.
+                </p>
+                <div class="hero-ctas">
+                    <a href="/signup" class="btn-primary">Explore Products</a>
+                    <a href="/login" class="btn-secondary">Log In</a>
+                </div>
+            </div>
+            <div class="hero-collage">
+                <img src="/static/images/traditional_mango_pickle.jpg" alt="Traditional Mango Pickle" class="collage-base">
+                <img src="/static/images/chicken_pickle.jpg" alt="Spicy Chicken Pickle" class="collage-overlay">
+            </div>
+        </section>
+
+        <!-- Brand Highlights -->
+        <section class="highlights-section">
+            <div class="highlights-container">
+                <div class="highlight-box">
+                    <span class="highlight-icon">🌿</span>
+                    <h4>Cold-Pressed Peanut Oil</h4>
+                    <p>All pickles are prepared using organic cold-pressed peanut and mustard oils for that rich, traditional aroma.</p>
+                </div>
+                <div class="highlight-box">
+                    <span class="highlight-icon">🔥</span>
+                    <h4>Gourmet Quality</h4>
+                    <p>Made in small batches with premium select ingredients, clean preparation, and zero artificial preservatives.</p>
+                </div>
+                <div class="highlight-box">
+                    <span class="highlight-icon">👵</span>
+                    <h4>Grandma's Recipes</h4>
+                    <p>Authentic spice mixes hand-pounded to match traditional Andhra recipes passed down through generations.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Explore Category Tiles -->
+        <section style="max-width: 1200px; margin: 60px auto; padding: 0 20px;">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="product-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); padding: 20px 0;">
+                <a href="/signup" class="category-card">
+                    <img src="/static/images/traditional_mango_pickle.jpg" alt="Vegetarian Pickles" class="category-card-img">
+                    <h3>Vegetarian Pickles</h3>
+                    <p>Mango, Lemon, Tomato, and Bitter Gourd specialties. Starting at ₹120</p>
+                </a>
+                <a href="/signup" class="category-card">
+                    <img src="/static/images/chicken_pickle.jpg" alt="Non-Vegetarian Pickles" class="category-card-img">
+                    <h3>Non-Vegetarian Pickles</h3>
+                    <p>Boneless Chicken, Slow-Cooked Mutton, and Prawn variations. Starting at ₹200</p>
+                </a>
+                <a href="/signup" class="category-card">
+                    <img src="/static/images/banana_chips.jpg" alt="Home-style Snacks" class="category-card-img">
+                    <h3>Home-style Snacks</h3>
+                    <p>Banana Chips, Chekka Pakodi, Laddu, and sweet clusters. Starting at ₹100</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+
 </body>
 </html>

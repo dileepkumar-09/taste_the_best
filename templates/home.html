@@ -1,25 +1,79 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Home - HomeMade Pickles</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <nav>
-        <span>Welcome, {{ session['username'] }}</span>
-        <div>
-            <a href="/home">Home</a>
-            <a href="/cart">Cart</a>
-            <a href="/logout">Logout</a>
+{% extends "base.html" %}
+
+{% block title %}Home - Taste the Best Storefront{% endblock %}
+
+{% block content %}
+<!-- Welcome User Banner -->
+<div class="welcome-banner">
+    <h2>Hello, {{ session.get('username', 'Gourmet Lover') }}!</h2>
+    <p>Ready to spice up your meals today? Choose a category below or ask our AI assistant to compare or customize jars for you!</p>
+</div>
+
+<!-- Category Exploration Grid -->
+<div style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+    <h3 class="section-title">Explore Our Categories</h3>
+    <div class="product-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); padding: 20px 0;">
+        <a href="/veg_pickles" class="category-card">
+            <img src="/static/images/traditional_mango_pickle.jpg" alt="Veg Pickles" class="category-card-img">
+            <h3>Vegetarian Pickles</h3>
+            <p>Authentic, tangy Mango, Lemon, Tomato, and Bitter Gourd jars.</p>
+        </a>
+        <a href="/non_veg_pickles" class="category-card">
+            <img src="/static/images/chicken_pickle.jpg" alt="Non-Veg Pickles" class="category-card-img">
+            <h3>Non-Vegetarian Pickles</h3>
+            <p>Rich, slow-cooked Chicken, Prawns, and lean Mutton delicacies.</p>
+        </a>
+        <a href="/snacks" class="category-card">
+            <img src="/static/images/banana_chips.jpg" alt="Snacks" class="category-card-img">
+            <h3>Artisanal Snacks</h3>
+            <p>Crispy Banana Chips, Chekka Pakodi, and healthy Ragi Laddus.</p>
+        </a>
+    </div>
+</div>
+
+<!-- Bestsellers Showcase -->
+<div style="max-width: 1200px; margin: 40px auto; padding: 0 20px; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 40px;">
+    <h3 class="section-title">This Week's Signature Selection</h3>
+    <div class="product-grid" style="padding: 20px 0;">
+        <!-- Card 1 -->
+        <div class="product-card">
+            <span class="badge-tag" style="background: var(--accent);">Signature</span>
+            <div>
+                <img src="/static/images/gongura_prawns.jpg" alt="Gongura Prawns">
+                <h3>Gongura Prawns</h3>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin: 4px 0;">Spicy prawns blended in tangy Gongura leaves</p>
+            </div>
+            <div>
+                <div style="font-weight: 700; color: var(--accent); margin: 10px 0; font-size: 1.1rem;">₹600 <span style="font-size:0.85rem; color:var(--text-muted); font-weight: normal;">(250g)</span></div>
+                <a href="/non_veg_pickles" class="btn-green" style="text-decoration:none; display:block;">View Details</a>
+            </div>
         </div>
-    </nav>
-    <div style="text-align: center; padding: 50px;">
-        <h2>What would you like to explore today?</h2>
-        <div class="product-grid">
-            <a href="/veg_pickles" class="btn-green" style="text-decoration:none;">Veg Pickles</a>
-            <a href="/non_veg_pickles" class="btn-green" style="text-decoration:none;">Non-Veg Pickles</a>
-            <a href="/snacks" class="btn-green" style="text-decoration:none;">Snacks</a>
+        <!-- Card 2 -->
+        <div class="product-card">
+            <span class="badge-tag" style="background: var(--primary);">Bestseller</span>
+            <div>
+                <img src="/static/images/traditional_mango_pickle.jpg" alt="Mango Pickle">
+                <h3>Traditional Mango Pickle</h3>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin: 4px 0;">Classic grandma's spicy raw mango pickle</p>
+            </div>
+            <div>
+                <div style="font-weight: 700; color: var(--accent); margin: 10px 0; font-size: 1.1rem;">₹150 <span style="font-size:0.85rem; color:var(--text-muted); font-weight: normal;">(250g)</span></div>
+                <a href="/veg_pickles" class="btn-green" style="text-decoration:none; display:block;">View Details</a>
+            </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="product-card">
+            <span class="badge-tag" style="background: #3b82f6;">Organic</span>
+            <div>
+                <img src="/static/images/banana_chips.jpg" alt="Banana Chips">
+                <h3>Banana Chips</h3>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin: 4px 0;">Crispy wafers fried in pure coconut oil</p>
+            </div>
+            <div>
+                <div style="font-weight: 700; color: var(--accent); margin: 10px 0; font-size: 1.1rem;">₹300 <span style="font-size:0.85rem; color:var(--text-muted); font-weight: normal;">(250g)</span></div>
+                <a href="/snacks" class="btn-green" style="text-decoration:none; display:block;">View Details</a>
+            </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

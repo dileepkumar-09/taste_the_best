@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Taste the Best{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='zaby-chat.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <a href="/" class="brand-logo">🏺 Taste the Best</a>
+            <nav class="nav-links">
+                {% if session.get('username') %}
+                <span class="user-welcome-nav">Hi, {{ session['username'] }}</span>
+                <a href="/home">Storefront</a>
+                <a href="/cart" class="nav-cart-btn">🛒 Cart (<span class="cart-count">0</span>)</a>
+                <a href="/logout" class="nav-logout-btn">Logout</a>
+                {% else %}
+                <a href="/login" class="nav-login-btn">Login</a>
+                <a href="/signup" class="nav-signup-btn">Get Started</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    {% if session.get('username') %}
+    <!-- Zaby AI Chat Widget -->
+    <button id="zaby-fab" class="zaby-fab" title="Chat with our AI assistant">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/>
+            <path d="M7 9h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/>
+        </svg>
+    </button>
+
+    <div id="zaby-chat-panel" class="zaby-chat-panel">
+        <!-- Minimal Header -->
+        <div class="zaby-chat-header">
+            <div class="zaby-header-top">
+                <div class="zaby-chat-header-avatar">
+                    <div class="aurora-orb">
+                        <div class="aurora-core"></div>
+                        <div class="aurora-refract"></div>
+                        <div class="aurora-ring"></div>
+                        <div class="aurora-particle p1"></div>
+                        <div class="aurora-particle p2"></div>
+                        <div class="aurora-particle p3"></div>
+                    </div>
+                </div>
+                <div class="zaby-chat-header-info">
+                    <h4>Zaby AI</h4>
+                    <p><span class="zaby-status-dot"></span> Online</p>
+                </div>
+                <div class="zaby-header-actions">
+                    <button class="zaby-header-icon" id="zaby-close-btn" title="Close">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messages Area -->
+        <div id="zaby-chat-messages" class="zaby-chat-messages">
+            <div class="zaby-welcome">
+                <span class="zaby-welcome-text">👋 Hi! I'm your gourmet assistant.<br>What would you like to discover today?</span>
+                <span class="zaby-welcome-star">✦</span>
+            </div>
+            <div class="zaby-quick-actions">
+                <div class="zaby-quick-card" data-query="Show me best sellers">
+                    <span class="zaby-quick-emoji">🔥</span>
+                    <span class="zaby-quick-label">Best Sellers</span>
+                </div>
+                <div class="zaby-quick-card" data-query="Show me spicy pickles">
+                    <span class="zaby-quick-emoji">🌶️</span>
+                    <span class="zaby-quick-label">Spicy Pickles</span>
+                </div>
+                <div class="zaby-quick-card" data-query="Show me all pickles">
+                    <span class="zaby-quick-emoji">🥒</span>
+                    <span class="zaby-quick-label">All Pickles</span>
+                </div>
+                <div class="zaby-quick-card" data-query="Suggest healthy snacks">
+                    <span class="zaby-quick-emoji">🥜</span>
+                    <span class="zaby-quick-label">Healthy Snacks</span>
+                </div>
+                <div class="zaby-quick-card" data-query="Show me sweets">
+                    <span class="zaby-quick-emoji">🍬</span>
+                    <span class="zaby-quick-label">Sweets</span>
+                </div>
+                <div class="zaby-quick-card" data-query="Show me gift boxes">
+                    <span class="zaby-quick-emoji">🎁</span>
+                    <span class="zaby-quick-label">Gift Boxes</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="zaby-chat-input-wrapper">
+            <div class="zaby-input-box">
+                <div class="zaby-chat-input">
+                    <textarea id="zaby-chat-input" placeholder="Type your request..." rows="1" autocomplete="off"></textarea>
+                    <div class="zaby-input-footer">
+                        <button id="zaby-chat-send" class="zaby-send-btn" title="Send">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 11l5-5 5 5M12 6v13"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/zaby-chat.js') }}"></script>
+    {% endif %}
+    {% block scripts %}{% endblock %}
+</body>
+</html>
